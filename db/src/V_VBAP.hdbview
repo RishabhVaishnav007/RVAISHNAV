@@ -1,0 +1,1 @@
+VIEW "V_VBAP" AS Select * from S_VBAP 

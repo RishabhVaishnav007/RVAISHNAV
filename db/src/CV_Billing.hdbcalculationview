@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CV_Billing" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<descriptions defaultDescription="CV_Billing"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="V_VBRP">
+    <resourceUri>V_VBRP</resourceUri>
+  </DataSource>
+  <DataSource id="V_VBRK">
+    <resourceUri>V_VBRK</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="BillingItem">
+    <viewAttributes>
+      <viewAttribute id="MANDT"/>
+      <viewAttribute id="VBELN"/>
+      <viewAttribute id="POSNR"/>
+      <viewAttribute id="NTGEW"/>
+      <viewAttribute id="BRGEW"/>
+      <viewAttribute id="NETWR"/>
+      <viewAttribute id="MATNR"/>
+      <viewAttribute id="WKREG"/>
+      <viewAttribute id="KOSTL"/>
+      <viewAttribute id="BONUS"/>
+      <viewAttribute id="ERDAT"/>
+      <viewAttribute id="ERNAM"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="V_VBRP"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="BillingHeader">
+    <viewAttributes>
+      <viewAttribute id="VBELN"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="V_VBRK"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="C1_N" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="MANDT"/>
+      <viewAttribute id="VBELN"/>
+      <viewAttribute id="POSNR" aggregationType="sum"/>
+      <viewAttribute id="NTGEW" aggregationType="sum"/>
+      <viewAttribute id="BRGEW" aggregationType="sum"/>
+      <viewAttribute id="NETWR" aggregationType="sum"/>
+      <viewAttribute id="MATNR"/>
+      <viewAttribute id="WKREG"/>
+      <viewAttribute id="KOSTL"/>
+      <viewAttribute id="BONUS"/>
+      <viewAttribute id="ERDAT"/>
+      <viewAttribute id="ERNAM"/>
+      <viewAttribute hidden="true" id="JOIN$VBELN$VBELN"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="BillingHeader">
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$VBELN$VBELN" source="VBELN"/>
+    </input>
+    <input node="BillingItem">
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="VBELN" source="VBELN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="POSNR" source="POSNR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NTGEW" source="NTGEW"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BRGEW" source="BRGEW"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NETWR" source="NETWR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATNR" source="MATNR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WKREG" source="WKREG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="KOSTL" source="KOSTL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BONUS" source="BONUS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ERDAT" source="ERDAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ERNAM" source="ERNAM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$VBELN$VBELN" source="VBELN"/>
+    </input>
+    <joinAttribute name="JOIN$VBELN$VBELN"/>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Join_1">
+  <attributes>
+    <attribute id="MANDT" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MANDT"/>
+      <keyMapping columnObjectName="Join_1" columnName="MANDT"/>
+    </attribute>
+    <attribute id="VBELN" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="VBELN"/>
+      <keyMapping columnObjectName="Join_1" columnName="VBELN"/>
+    </attribute>
+    <attribute id="MATNR" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATNR"/>
+      <keyMapping columnObjectName="Join_1" columnName="MATNR"/>
+    </attribute>
+    <attribute id="WKREG" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="WKREG"/>
+      <keyMapping columnObjectName="Join_1" columnName="WKREG"/>
+    </attribute>
+    <attribute id="KOSTL" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="KOSTL"/>
+      <keyMapping columnObjectName="Join_1" columnName="KOSTL"/>
+    </attribute>
+    <attribute id="BONUS" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BONUS"/>
+      <keyMapping columnObjectName="Join_1" columnName="BONUS"/>
+    </attribute>
+    <attribute id="ERDAT" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ERDAT"/>
+      <keyMapping columnObjectName="Join_1" columnName="ERDAT"/>
+    </attribute>
+    <attribute id="ERNAM" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ERNAM"/>
+      <keyMapping columnObjectName="Join_1" columnName="ERNAM"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="POSNR" order="3" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="POSNR"/>
+      <measureMapping columnObjectName="Join_1" columnName="POSNR"/>
+    </measure>
+    <measure id="NTGEW" order="4" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="NTGEW"/>
+      <measureMapping columnObjectName="Join_1" columnName="NTGEW"/>
+    </measure>
+    <measure id="BRGEW" order="5" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="BRGEW"/>
+      <measureMapping columnObjectName="Join_1" columnName="BRGEW"/>
+    </measure>
+    <measure id="NETWR" order="6" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="NETWR"/>
+      <measureMapping columnObjectName="Join_1" columnName="NETWR"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="221" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="BillingItem" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="356"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="BillingHeader" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="356"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="221" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="BillingHeader" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="141"/>
+    </shape>
+    <shape modelObjectName="BillingItem" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="127"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

@@ -1,0 +1,8 @@
+{
+  "S_VBAP": {
+    "target": {
+      "object": "VBAP",
+      "schema": "G_S4_DEV"
+    }
+  }
+}
